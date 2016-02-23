@@ -212,7 +212,7 @@ calcomm.controller('SignUpCtrl', function($rootScope,$scope,CalcommResource,cssI
 				console.log(JSON.stringify($scope.jprofile));
 				Upload.upload({
 		            url: 'http://localhost:3000/api/v1/profiles',
-		            data: {file: $scope.profile.picture1, 'data': $scope.jprofile}
+		            data: {file: $scope.profile.picture1, token:$scope.user.token,app_id:CalcommConfig.AppId}
 		        }).then(function (response) {
 		        }, function (error) {
 		            console.log(error);
