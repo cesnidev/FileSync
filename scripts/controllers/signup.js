@@ -215,7 +215,7 @@ calcomm.controller('SignUpCtrl', function($rootScope,$scope,CalcommResource,cssI
 		            data: {file: $scope.profile.picture1, 'data': $scope.jprofile}
 		        }).then(function (response) {
 		        }, function (error) {
-		            console.log(JSON.stringify(error));
+		            console.log(error);
 		        }, function (evt) {});	
 			};
 			$scope.experienceclick = function(c,form)
