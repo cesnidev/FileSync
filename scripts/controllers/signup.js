@@ -216,6 +216,8 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			      method: 'POST',
 			      headers: { 'Content-Type': false },
 			      fields: {
+			      	app_id:CalcommConfig.AppId,
+			      	token:$scope.user.token,
 			        'profile[gender]': $scope.profile.gender,
 			        'profile[eye_color]': $scope.profile.eye_color,
 			        'profile[shoesize]': $scope.profile.shoesize,
