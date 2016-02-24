@@ -1,6 +1,7 @@
 'use strict';
 var calcomm = angular.module('Client');
 calcomm.controller('SignUpCtrl', function(fileUpload,uploadService,$rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload) {
+	
 	$scope.files=[];
 		cssInjector.add("assets/css/proyecto.form.css");
 			
@@ -248,9 +249,9 @@ calcomm.controller('SignUpCtrl', function(fileUpload,uploadService,$rootScope,$s
     this.uploadFileToUrl = function(file, uploadUrl,token){
         var fd = new FormData();
         fd.append('picture1', file);
-            data.append('token',token);
-            data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
-            data.append('profile',{picture1:file,gender:'male',shoesize:'5'});
+            fd.append('token',token);
+            fd.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
+            fd.append('profile',{picture1:file,gender:'male',shoesize:'5'});
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
