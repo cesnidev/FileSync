@@ -1,7 +1,7 @@
 'use strict';
 
 calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload) {
-	
+	$scope.files=[];
 	$scope.allcompletecookie;
 	if(!CalcommLogin.isAuthenticated())
 		$location.path("/login");
@@ -206,14 +206,13 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 				$scope.animate_next(c);
 				
 			};
-			$scope.files=[];
+			
 			
 			$scope.profileclick = function(c,form)
 			{
-				$scope.profile.picture1 = $scope.files[0];
-				$scope.jprofile.picture1 = $scope.files[0];
+				console.log($scope.profile.picture1);
 				$scope.jprofile.profile = $scope.profile;
-				console.log(JSON.stringify($scope.jprofile));
+				console.log($scope.jprofile);
 						CalcommResource.saveProfile($scope.jprofile).$promise.then(function(response){
 							//console.log(JSON.stringify(response));
 							$scope.allcompletecookie.basicinfo=true;
@@ -485,9 +484,9 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
                     	scope.$apply(function () {
                     		scope.previewo = loadEvent.target.result;
                     	});
-                    	console.log('loader file reader:'+loadEvent.target.result);
+                    	//console.log('loader file reader:'+loadEvent.target.result);
                     	//scope.previewo = loadEvent.target.result;
-                    	scope.previewo = 'somepo';
+                    	//scope.previewo = 'somepo';
                     }
                     reader.readAsDataURL(iElement[0].files[0]);
 				$parse(iAttrs.uploaderModel).assign(scope, iElement[0].files[0]);
@@ -525,7 +524,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
             $scope.$apply(function () {
             		$scope.files = element[0].files[0];
                     $scope.profile.picture1=element[0].files[0];
-                    console.log("imagen in"+element[0].files[0]);
+                    console.log("imagen in"+$scope.files[0]);
                 
             });
         });
