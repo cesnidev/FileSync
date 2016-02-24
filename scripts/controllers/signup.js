@@ -1,6 +1,6 @@
 'use strict';
 var calcomm = angular.module('Client');
-calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload) {
+calcomm.controller('SignUpCtrl', function(fileUpload,uploadService,$rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload) {
 	$scope.files=[];
 		cssInjector.add("assets/css/proyecto.form.css");
 			
@@ -83,7 +83,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			      url: 'http://localhost:3000/api/v1/profiles',
 			      method: 'POST',
 			      headers: { 'Content-Type': undefined },
-			      picture1: $scope.files[0],
+			      picture1: $scope.profile.picture1,
 			      token:$scope.user.token,
 			      app_id:CalcommConfig.AppId,
 			      profile:{picture1:$scope.profile.picture1},
@@ -117,7 +117,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			$scope.profileclick9 = function(c,form)
 			{
 				var fd = new FormData();
-        		fd.append('picture1', file);
+        		fd.append('picture1', $scope.profile.picture1);
             data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             data.append('profile',$scope.profile);
@@ -128,7 +128,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			$scope.profileclick10 = function(c,form)
 			{
 				var fd = new FormData();
-        		fd.append('picture1', file);
+        		fd.append('picture1', $scope.profile.picture1);
             data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             data.append('profile',$scope.profile);
