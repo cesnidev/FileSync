@@ -119,9 +119,9 @@ calcomm.controller('SignUpCtrl', function(fileUpload,uploadService,$rootScope,$s
 			{
 				var fd = new FormData();
         		fd.append('picture1', $scope.profile.picture1);
-            data.append('token',token);
-            data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
-            data.append('profile',$scope.profile);
+            fd.append('token',token);
+            fd.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
+            fd.append('profile',$scope.profile);
             CalcommResource.saveProfile(fd).$promise.then(function(response){
 							
 						});
@@ -130,9 +130,9 @@ calcomm.controller('SignUpCtrl', function(fileUpload,uploadService,$rootScope,$s
 			{
 				var fd = new FormData();
         		fd.append('picture1', $scope.profile.picture1);
-            data.append('token',token);
-            data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
-            data.append('profile',$scope.profile);
+            fd.append('token',token);
+            fd.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
+            fd.append('profile',$scope.profile);
             CalcommResource.saveProfile2(fd).$promise.then(function(response){
 							
 						});
