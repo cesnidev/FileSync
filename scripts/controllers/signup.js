@@ -219,6 +219,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 		            console.log(error);
 		        }, function (evt) {});*/
 		        uploadService.send($scope.profile.picture1,$scope.user.token);	
+		        //fileUpload.uploadFileToUrl($scope.profile.picture1, 'http://localhost:3000/api/v1/profiles',$scope.user.token);
 			};
 			$scope.experienceclick = function(c,form)
 			{
