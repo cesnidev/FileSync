@@ -101,6 +101,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			
 			$scope.url = $location.absUrl();
 			$scope.user = Session.getSession();
+			$rootScope.user = $scope.user;
 			var allcomplete = $scope.user.forms;	
 			
 			if(Session.get('completeforms')==undefined)
@@ -507,7 +508,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
     };
 
 })
-.factory('uploadService', ['$rootScope', function ($rootScope,Session) {
+.factory('uploadService', ['$rootScope','Session', function ($rootScope,Session) {
 
     return {
         send: function (file) {
@@ -522,7 +523,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
                 $rootScope.$emit('upload:error', e);
             };
             data.append('file', file, 'picture1.jpg');
-            data.append('token',Session.getSession().token);
+            data.append('token',$rootScope.user.token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             data.append('profile',{picture1:file});
             xhr.open('POST', 'http://localhost:3000/api/v1/profiles');
@@ -530,5 +531,37 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
         }
     };
 
+}])
+.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}])
+.service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
+    this.uploadFileToUrl = function(file, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+            data.append('token',$rootScope.user.token);
+            data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
+            data.append('profile',{picture1:file});
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+        })
+        .error(function(){
+        });
+    }
 }]);
 
