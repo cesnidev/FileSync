@@ -39,7 +39,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			/* END INITS*/
 
 			$scope.addimgs = function(){
-				switch ($scope.imgs) {
+				/*switch ($scope.imgs) {
 					case 1:
 						if($scope.profile.picture1.data==undefined)
 						{
@@ -68,7 +68,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 							return;
 						}
 					break;
-				}
+				}*/
 				if($scope.imgs<5)
 					$scope.imgs = $scope.imgs+1;
 			};
@@ -524,7 +524,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
             };
-            data.append('file', file, 'picture1.jpg');
+            data.append('picture1', file, 'picture1.jpg');
             data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             data.append('profile',{picture1:file});
@@ -552,7 +552,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 .service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
     this.uploadFileToUrl = function(file, uploadUrl,token){
         var fd = new FormData();
-        fd.append('file', file);
+        fd.append('picture1', file);
             data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             data.append('profile',{picture1:file});
