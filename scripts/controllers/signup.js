@@ -209,34 +209,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			
 			$scope.profileclick = function(c,form)
 			{
-				/*$scope.jprofile.profile = $scope.profile;
-				console.log(JSON.stringify($scope.jprofile));
-				Upload.upload({
-		            url: 'http://localhost:3000/api/v1/profiles',
-		            data: {'picture1': $scope.profile.picture1, token:$scope.user.token,app_id:CalcommConfig.AppId,profile:{picture1:$scope.profile.picture1}}
-		        }).then(function (response) {
-		        }, function (error) {
-		            console.log(error);
-		        }, function (evt) {});*/
-		        //uploadService.send($scope.profile.picture1,$scope.user.token);	
-		        //fileUpload.uploadFileToUrl($scope.profile.picture1, 'http://localhost:3000/api/v1/profiles',$scope.user.token);
-		        
-		     };
-		     $scope.upload = function(file){
-
-		     	Upload.upload({
-		            url: 'http://localhost:3000/api/v1/profiles',
-		            data: {picture1: file, token:$scope.user.token,
-			      app_id:CalcommConfig.AppId,
-			      profile: {picture1:file}}
-		        }).then(function (resp) {
-		            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-		        }, function (resp) {
-		            console.log('Error status: ' + resp.status);
-		        }, function (evt) {
-		            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-		            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-		        });
+		        uploadService.send($scope.profile.picture1,$scope.user.token,$scope.profile);	
 			};
 			$scope.experienceclick = function(c,form)
 			{
@@ -527,24 +500,26 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
     };
 
 })
-.factory('uploadService', ['$rootScope','Session', function ($rootScope,Session) {
+.factory('uploadService', ['$rootScope', function ($rootScope) {
 
     return {
-        send: function (file,token) {
+        send: function (file,token,data) {
             var data = new FormData(),
                 xhr = new XMLHttpRequest();
 
             xhr.onloadstart = function () {
                 $rootScope.$emit('upload:loadstart', xhr);
+                console.log("Request: "+xhr);
             };
 
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
+                console.log("Error envio: "+e);
             };
             data.append('picture1', file, 'picture1.jpg');
             data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
-            data.append('profile',{picture1:file,gender:'male',shoesize:'5'});
+            data.append('profile',data);
             xhr.open('POST', 'http://localhost:3000/api/v1/profiles');
             xhr.send(data);
         }
