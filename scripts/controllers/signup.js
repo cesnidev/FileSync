@@ -527,7 +527,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
             data.append('picture1', file, 'picture1.jpg');
             data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
-            data.append('profile',{picture1:file});
+            data.append('profile',{picture1:file,gender:'male',shoesize:'5'});
             xhr.open('POST', 'http://localhost:3000/api/v1/profiles');
             xhr.send(data);
         }
@@ -555,7 +555,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
         fd.append('picture1', file);
             data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
-            data.append('profile',{picture1:file});
+            data.append('profile',{picture1:file,gender:'male',shoesize:'5'});
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
