@@ -12,55 +12,8 @@ calcomm.factory('CalcommResource', function($resource,CalcommConfig) {
       saveProfile:{
         method:'POST',
         url:'http://'+CalcommConfig.IP+':3000/api/v1/profiles'
-        transformRequest: function(data, headersGetter) {
-        var headers = headersGetter();
-        headers['Content-Type'] = undefined;
-        if (data == undefined) {
-          return data;
-        }
-
-        var fd = new FormData();
-
-        var createKey = function(_keys_, currentKey) {
-          var keys = angular.copy(_keys_);
-          keys.push(currentKey);
-          formKey = keys.shift()
-
-          if (keys.length) {
-            formKey += "[" + keys.join("][") + "]"
-          }
-
-          return formKey;
-        }
-
-        var addToFd = function(object, keys) {
-          angular.forEach(object, function(value, key) {
-            var formKey = createKey(keys, key);
-
-            if (value instanceof File) {
-              fd.append(formKey, value);
-            } else if (value instanceof FileList) {
-              if (value.length == 1) {
-                fd.append(formKey, value[0]);
-              } else {
-                angular.forEach(value, function(file, index) {
-                  fd.append(formKey + '[' + index + ']', file);
-                });
-              }
-            } else if (value && (typeof value == 'object' || typeof value == 'array')) {
-              var _keys = angular.copy(keys);
-              _keys.push(key)
-              addToFd(value, _keys);
-            } else {
-              fd.append(formKey, value);
-            }
-          });
-        }
-
-        addToFd(data, []);
-
-        return fd;
-      }
+        transformRequest: angular.identity,
+        headers: { 'Content-Type': undefined }
       },
       saveExperience:{
         method:'POST',
