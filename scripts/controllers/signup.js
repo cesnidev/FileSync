@@ -206,10 +206,11 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 				$scope.animate_next(c);
 				
 			};
+			$scope.files=[];
 			
 			$scope.profileclick = function(c,form)
 			{
-		        uploadService.send($scope.profile.picture1,$scope.user.token,$scope.profile);	
+		        uploadService.send($scope.files[0],$scope.user.token,$scope.profile);	
 			};
 			$scope.experienceclick = function(c,form)
 			{
@@ -487,6 +488,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
         element.bind('change', function (event) {
             var files = event.target.files;
             $scope.$apply(function () {
+            		$scope.files = element[0].files[0];
                     $scope.profile.picture1=element[0].files[0];
                     console.log("imagen in"+element[0].files[0]);
                 
