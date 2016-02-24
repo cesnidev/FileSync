@@ -1,6 +1,6 @@
 'use strict';
 
-calcomm.controller('SignUpCtrl', function($rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload) {
+calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload) {
 	
 	$scope.allcompletecookie;
 	if(!CalcommLogin.isAuthenticated())
@@ -208,7 +208,7 @@ calcomm.controller('SignUpCtrl', function($rootScope,$scope,CalcommResource,cssI
 			
 			$scope.profileclick = function(c,form)
 			{
-				$scope.jprofile.profile = $scope.profile;
+				/*$scope.jprofile.profile = $scope.profile;
 				console.log(JSON.stringify($scope.jprofile));
 				Upload.upload({
 		            url: 'http://localhost:3000/api/v1/profiles',
@@ -216,7 +216,8 @@ calcomm.controller('SignUpCtrl', function($rootScope,$scope,CalcommResource,cssI
 		        }).then(function (response) {
 		        }, function (error) {
 		            console.log(error);
-		        }, function (evt) {});	
+		        }, function (evt) {});*/
+		        uploadService.send($scope.profile.picture1);	
 			};
 			$scope.experienceclick = function(c,form)
 			{
@@ -488,5 +489,50 @@ calcomm.controller('SignUpCtrl', function($rootScope,$scope,CalcommResource,cssI
 		})
 		return deferred.promise;
 	}	
+}).directive('fileChange', function () {
+
+    var linker = function ($scope, element, attributes) {
+        element.bind('change', function (event) {
+            var files = event.target.files;
+            $scope.$apply(function () {
+                for (var i = 0, length = files.length; i < length; i++) {
+                    $scope.files.push(files[i]);
+                }
+            });
+        });
+    };
+
+    return {
+        restrict: 'A',
+        link: linker
+    };
+
 })
+.factory('uploadService', ['$rootScope', function ($rootScope,Session) {
+
+    return {
+        send: function (file) {
+            var data = new FormData(),
+                xhr = new XMLHttpRequest();
+
+            xhr.onloadstart = function () {
+                console.log('Factory: upload started: ', file.name);
+                $rootScope.$emit('upload:loadstart', xhr);
+            };
+
+            // When the request has failed.
+            xhr.onerror = function (e) {
+                $rootScope.$emit('upload:error', e);
+            };
+
+            // Send to server, where we can then access it with $_FILES['file].
+            data.append('file', file, file.name);
+            data.append('token',Session.getSession().token);
+            data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
+            xhr.open('POST', '/echo/json');
+            xhr.send(data);
+        }
+    };
+
+}]);
 
