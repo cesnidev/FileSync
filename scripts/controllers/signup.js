@@ -217,7 +217,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 		        for (var key in $scope.jprofile) {
 		            fd.append(key, $scope.jprofile[key]);
 		        }*/
-						CalcommResource.saveProfile(fd).$promise.then(function(response){
+						CalcommResource.saveProfile($scope.jprofile).$promise.then(function(response){
 							//console.log(JSON.stringify(response));
 							$scope.allcompletecookie.basicinfo=true;
 							$scope.allcompletecookie.profile=true;
