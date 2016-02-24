@@ -1,6 +1,6 @@
 'use strict';
 
-calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload,post) {
+calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,CalcommResource,cssInjector,$window,Session,$location,CalcommConfig,CalcommLogin,Upload) {
 	
 	$scope.allcompletecookie;
 	if(!CalcommLogin.isAuthenticated())
@@ -220,30 +220,23 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 		        }, function (evt) {});*/
 		        //uploadService.send($scope.profile.picture1,$scope.user.token);	
 		        //fileUpload.uploadFileToUrl($scope.profile.picture1, 'http://localhost:3000/api/v1/profiles',$scope.user.token);
+		        
 		     };
 		     $scope.upload = function(file){
-		        Upload.upload({
-			      url: 'http://localhost:3000/api/v1/profiles',
-			      method: 'PUT',
-			      headers: { 'Content-Type': false },
-			      fields: {
-			        'post[title]': post.title,
-			        'post[body]': post.body,
-			        'post[image]': file
-			      },
-			      picture1: file,
-			      token:$scope.user.token,
+
+		     	Upload.upload({
+		            url: 'http://localhost:3000/api/v1/profiles',
+		            data: {picture1: file, token:$scope.user.token,
 			      app_id:CalcommConfig.AppId,
-			      profile: {picture1:file},
-			      sendFieldsAs: 'json'
-			    }).then(function (resp) {
-			      console.log('Success ' + resp.config.file.name + 'uploaded. Response: ' + resp.data);
-			    }, function (resp) {
-			      console.log('Error status: ' + resp.status);
-			    }, function (evt) {
-			      var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-			      console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-			    });
+			      profile: {picture1:file}}
+		        }).then(function (resp) {
+		            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+		        }, function (resp) {
+		            console.log('Error status: ' + resp.status);
+		        }, function (evt) {
+		            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+		            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+		        });
 			};
 			$scope.experienceclick = function(c,form)
 			{
