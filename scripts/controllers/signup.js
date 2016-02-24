@@ -218,7 +218,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 		        }, function (error) {
 		            console.log(error);
 		        }, function (evt) {});*/
-		        uploadService.send($scope.profile.picture1);	
+		        uploadService.send($scope.profile.picture1,$scope.user.token);	
 			};
 			$scope.experienceclick = function(c,form)
 			{
@@ -511,7 +511,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 .factory('uploadService', ['$rootScope','Session', function ($rootScope,Session) {
 
     return {
-        send: function (file) {
+        send: function (file,token) {
             var data = new FormData(),
                 xhr = new XMLHttpRequest();
 
@@ -523,7 +523,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
                 $rootScope.$emit('upload:error', e);
             };
             data.append('file', file, 'picture1.jpg');
-            data.append('token',$rootScope.user.token);
+            data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             data.append('profile',{picture1:file});
             xhr.open('POST', 'http://localhost:3000/api/v1/profiles');
@@ -548,10 +548,10 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
     };
 }])
 .service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
-    this.uploadFileToUrl = function(file, uploadUrl){
+    this.uploadFileToUrl = function(file, uploadUrl,token){
         var fd = new FormData();
         fd.append('file', file);
-            data.append('token',$rootScope.user.token);
+            data.append('token',token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             data.append('profile',{picture1:file});
         $http.post(uploadUrl, fd, {
