@@ -210,7 +210,29 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			
 			$scope.profileclick = function(c,form)
 			{
-		        uploadService.send($scope.files[0],$scope.user.token,$scope.profile);	
+		        //uploadService.send($scope.files[0],$scope.user.token,$scope.profile);	
+		        Upload.upload({
+			      url: 'http://localhost:3000/api/v1/profiles',
+			      method: 'PUT',
+			      headers: { 'Content-Type': false },
+			      fields: {
+			        'profile[gender]': $scope.profile.gender,
+			        'profile[eye_color]': $scope.profile.eye_color,
+			        'profile[shoesize]': $scope.profile.shoesize,
+			        'profile[picture1]': $scope.files[0]
+			      },
+			      picture1: $scope.files[0],
+			      token:$scope.user.token,
+			      app_id:CalcommConfig.AppId,
+			      sendFieldsAs: 'json'
+			    }).then(function (resp) {
+			      //console.log('Success ' + resp.config.file.name + 'uploaded. Response: ' + resp.data);
+			    }, function (resp) {
+			      //console.log('Error status: ' + resp.status);
+			    }, function (evt) {
+			      //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+			      //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+			    });
 			};
 			$scope.experienceclick = function(c,form)
 			{
