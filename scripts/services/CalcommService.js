@@ -10,7 +10,7 @@ calcomm.factory('CalcommResource', function($resource,CalcommConfig) {
         url:'http://'+CalcommConfig.IP+':3000/api/v1/basics'
       },
       saveProfile:{
-        method:'POST',
+        method:'PUT',
         url:'http://'+CalcommConfig.IP+':3000/api/v1/profiles'
       },
       saveExperience:{
