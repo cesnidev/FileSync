@@ -495,7 +495,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
         element.bind('change', function (event) {
             var files = event.target.files;
             $scope.$apply(function () {
-                    $scope.files.push(files[0]);
+                    $scope.files=element[0].files[0];
                 
             });
         });
