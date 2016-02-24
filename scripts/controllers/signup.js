@@ -495,9 +495,8 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
         element.bind('change', function (event) {
             var files = event.target.files;
             $scope.$apply(function () {
-                for (var i = 0, length = files.length; i < length; i++) {
-                    $scope.files.push(files[i]);
-                }
+                    $scope.files.push(files[0]);
+                
             });
         });
     };
@@ -516,14 +515,13 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
                 xhr = new XMLHttpRequest();
 
             xhr.onloadstart = function () {
-                console.log('started: ', file.name);
                 $rootScope.$emit('upload:loadstart', xhr);
             };
 
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
             };
-            data.append('file', file, file.name);
+            data.append('file', file, 'picture1.jpg');
             data.append('token',Session.getSession().token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
             xhr.open('POST', 'http://localhost:3000/api/v1/profiles');
