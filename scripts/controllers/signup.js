@@ -498,6 +498,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
             var files = event.target.files;
             $scope.$apply(function () {
                     $scope.profile.picture1=element[0].files[0];
+                    console.log("imagen in"+element[0].files[0]);
                 
             });
         });
