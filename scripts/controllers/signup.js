@@ -516,20 +516,17 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
                 xhr = new XMLHttpRequest();
 
             xhr.onloadstart = function () {
-                console.log('Factory: upload started: ', file.name);
+                console.log('started: ', file.name);
                 $rootScope.$emit('upload:loadstart', xhr);
             };
 
-            // When the request has failed.
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
             };
-
-            // Send to server, where we can then access it with $_FILES['file].
             data.append('file', file, file.name);
             data.append('token',Session.getSession().token);
             data.append('app_id','e86aea35d849802cdf17e00d965c7bd9');
-            xhr.open('POST', '/echo/json');
+            xhr.open('POST', 'http://localhost:3000/api/v1/profiles');
             xhr.send(data);
         }
     };
