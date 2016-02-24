@@ -210,31 +210,42 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			
 			$scope.profileclick = function(c,form)
 			{
+				$scope.profile.picture1 = $scope.files[0];
+				$scope.jexperience.picture1 = $scope.files[0];
+				$scope.jexperience.experience = $scope.experience;
+						CalcommResource.saveExperience($scope.jexperience).$promise.then(function(response){
+							//console.log(JSON.stringify(response));
+							$scope.allcompletecookie.basicinfo=true;
+							$scope.allcompletecookie.profile=true;
+							$scope.allcompletecookie.experience=true;
+							Session.save('completeforms',$scope.allcompletecookie);
+							$scope.animate_next(c);
+						});
 		        //uploadService.send($scope.files[0],$scope.user.token,$scope.profile);	
-		        Upload.upload({
-			      url: 'http://localhost:3000/api/v1/profiles',
-			      method: 'POST',
-			      headers: { 'Content-Type': false },
-			      fields: {
-			      	app_id:CalcommConfig.AppId,
-			      	token:$scope.user.token,
-			        'profile[gender]': $scope.profile.gender,
-			        'profile[eye_color]': $scope.profile.eye_color,
-			        'profile[shoesize]': $scope.profile.shoesize,
-			        'profile[picture1]': $scope.files[0]
-			      },
-			      picture1: $scope.files[0],
-			      token:$scope.user.token,
-			      app_id:CalcommConfig.AppId,
-			      sendFieldsAs: 'json'
-			    }).then(function (resp) {
-			      //console.log('Success ' + resp.config.file.name + 'uploaded. Response: ' + resp.data);
-			    }, function (resp) {
-			      //console.log('Error status: ' + resp.status);
-			    }, function (evt) {
-			      //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-			      //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-			    });
+		     //    Upload.upload({
+			    //   url: 'http://localhost:3000/api/v1/profiles',
+			    //   method: 'POST',
+			    //   headers: { 'Content-Type': false },
+			    //   fields: {
+			    //   	app_id:CalcommConfig.AppId,
+			    //   	token:$scope.user.token,
+			    //     'profile[gender]': $scope.profile.gender,
+			    //     'profile[eye_color]': $scope.profile.eye_color,
+			    //     'profile[shoesize]': $scope.profile.shoesize,
+			    //     'profile[picture1]': $scope.files[0]
+			    //   },
+			    //   picture1: $scope.files[0],
+			    //   token:$scope.user.token,
+			    //   app_id:CalcommConfig.AppId,
+			    //   sendFieldsAs: 'json'
+			    // }).then(function (resp) {
+			    //   //console.log('Success ' + resp.config.file.name + 'uploaded. Response: ' + resp.data);
+			    // }, function (resp) {
+			    //   //console.log('Error status: ' + resp.status);
+			    // }, function (evt) {
+			    //   //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+			    //   //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+			    // });
 			};
 			$scope.experienceclick = function(c,form)
 			{
