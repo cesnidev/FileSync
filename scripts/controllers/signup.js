@@ -211,13 +211,12 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 			$scope.profileclick = function(c,form)
 			{
 				$scope.profile.picture1 = $scope.files[0];
-				$scope.jexperience.picture1 = $scope.files[0];
-				$scope.jexperience.experience = $scope.experience;
-						CalcommResource.saveExperience($scope.jexperience).$promise.then(function(response){
+				$scope.jprofile.picture1 = $scope.files[0];
+				$scope.jprofile.profile = $scope.profile;
+						CalcommResource.saveProfile($scope.profile).$promise.then(function(response){
 							//console.log(JSON.stringify(response));
 							$scope.allcompletecookie.basicinfo=true;
 							$scope.allcompletecookie.profile=true;
-							$scope.allcompletecookie.experience=true;
 							Session.save('completeforms',$scope.allcompletecookie);
 							$scope.animate_next(c);
 						});
