@@ -213,7 +213,7 @@ calcomm.controller('SignUpCtrl', function(uploadService,$rootScope,$scope,Calcom
 		        //uploadService.send($scope.files[0],$scope.user.token,$scope.profile);	
 		        Upload.upload({
 			      url: 'http://localhost:3000/api/v1/profiles',
-			      method: 'PUT',
+			      method: 'POST',
 			      headers: { 'Content-Type': false },
 			      fields: {
 			        'profile[gender]': $scope.profile.gender,
